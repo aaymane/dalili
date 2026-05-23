@@ -172,17 +172,10 @@
       </div>
     </div>
 
-    <!-- Social proof stats -->
+    <!-- Trust signals -->
     <div class="dl-wl-proof reveal reveal-delay-4">
-      <div class="dl-wl-proof-avatars" aria-hidden="true">
-        <span style="--h:218"></span>
-        <span style="--h:280"></span>
-        <span style="--h:25"></span>
-        <span style="--h:160"></span>
-        <span style="--h:340"></span>
-      </div>
       <div class="dl-wl-proof-text">
-        <strong>+380 personnes</strong> déjà inscrites sur la liste d'attente
+        Sois parmi les premiers à accéder à DALILI.
       </div>
     </div>
 
@@ -852,21 +845,24 @@
       const role     = formData.get('role') as string;
       const country  = formData.get('country') as string;
 
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      const res = await fetch('/api/waitlist', {
         method:  'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, role, country, source: 'dalili-waitlist' }),
       });
 
-      if (res.ok || res.status === 200) {
+      if (res.ok) {
         showSuccess();
       } else {
-        // If Formspree not configured yet, still show success (demo mode)
-        showSuccess();
+        const data = await res.json().catch(() => ({}));
+        btn!.disabled = false;
+        btn!.querySelector('.dl-wb-text')!.textContent = 'Réessayer';
+        alert(data.error ?? 'Une erreur est survenue.');
       }
     } catch {
-      // Network error or Formspree not configured — show success anyway for demo
-      showSuccess();
+      btn!.disabled = false;
+      btn!.querySelector('.dl-wb-text')!.textContent = 'Réessayer';
+      alert('Vérife ta connexion et réessaie.');
     }
   });
 
