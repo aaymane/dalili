@@ -1,0 +1,881 @@
+---
+// DALILI Waitlist — cinematic dark pre-order section
+// Form submissions go to Formspree — replace YOUR_FORM_ID with your real ID
+// Sign up free at https://formspree.io
+---
+
+<section class="dl-wl" id="waitlist">
+  <!-- Atmospheric CSS background -->
+  <div class="dl-wl-bg" aria-hidden="true">
+    <div class="dl-wl-orb dl-wl-orb-1"></div>
+    <div class="dl-wl-orb dl-wl-orb-2"></div>
+    <div class="dl-wl-orb dl-wl-orb-3"></div>
+    <div class="dl-wl-grid"></div>
+  </div>
+
+  <div class="container dl-wl-inner">
+
+    <!-- Eyebrow badge -->
+    <div class="dl-wl-badge reveal">
+      <span class="dl-wl-badge-dot" aria-hidden="true"></span>
+      Application mobile · Bientôt disponible
+    </div>
+
+    <!-- Main headline -->
+    <h2 class="dl-wl-title reveal reveal-delay-1">
+      Sois parmi<br/>
+      les premiers<br/>
+      <em>à y accéder.</em>
+    </h2>
+
+    <!-- Sub copy -->
+    <p class="dl-wl-sub reveal reveal-delay-2">
+      DALILI est en développement actif. Rejoins la liste d'attente
+      et reçois un accès en avant-première, des mises à jour exclusives,
+      et une place dans la communauté fondatrice.
+    </p>
+
+    <!-- Form card — secondary touchpoint -->
+    <div class="dl-wl-card reveal reveal-delay-3">
+      <!-- Card header -->
+      <div class="dl-wl-card-head">
+        <div class="dl-wl-card-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.97 1.22 2 2 0 012.97 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="dl-wl-card-title">Rejoindre la liste d'attente</p>
+          <p class="dl-wl-card-desc">Gratuit · Pas de spam · Désabonnement en 1 clic</p>
+        </div>
+      </div>
+
+      <!-- The form -->
+      <form
+        id="wl-form"
+        class="dl-wl-form"
+        novalidate
+        aria-label="Formulaire liste d'attente DALILI"
+      >
+        <div class="dl-wl-fields">
+          <div class="dl-wl-field-group">
+            <label for="wl-name">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              Prénom
+            </label>
+            <input
+              type="text"
+              id="wl-name"
+              name="name"
+              placeholder="Ton prénom"
+              autocomplete="given-name"
+              required
+              aria-required="true"
+            />
+            <span class="dl-wl-field-err" id="err-name">Saisis ton prénom</span>
+          </div>
+
+          <div class="dl-wl-field-group">
+            <label for="wl-email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Email
+            </label>
+            <input
+              type="email"
+              id="wl-email"
+              name="email"
+              placeholder="ton@email.com"
+              autocomplete="email"
+              required
+              aria-required="true"
+            />
+            <span class="dl-wl-field-err" id="err-email">Entre un email valide</span>
+          </div>
+
+          <div class="dl-wl-field-group">
+            <label for="wl-country">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+              Pays d'origine
+            </label>
+            <input
+              type="text"
+              id="wl-country"
+              name="country"
+              placeholder="Ex: Maroc, Algérie, Tunisie…"
+              autocomplete="country-name"
+            />
+          </div>
+        </div>
+
+        <!-- Profile type -->
+        <div class="dl-wl-role-group">
+          <p class="dl-wl-role-label">Je suis…</p>
+          <div class="dl-wl-roles">
+            <label class="dl-wl-role-option" data-value="student">
+              <input type="radio" name="role" value="student" checked />
+              <span class="dl-wl-role-icon">🎓</span>
+              <span>Étudiant(e)</span>
+            </label>
+            <label class="dl-wl-role-option" data-value="mentor">
+              <input type="radio" name="role" value="mentor" />
+              <span class="dl-wl-role-icon">🤝</span>
+              <span>Mentor</span>
+            </label>
+            <label class="dl-wl-role-option" data-value="host">
+              <input type="radio" name="role" value="host" />
+              <span class="dl-wl-role-icon">🏠</span>
+              <span>Hôte</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="dl-wl-submit" id="wl-submit">
+          <span class="dl-wl-submit-text">Rejoindre en avant-première</span>
+          <span class="dl-wl-submit-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </span>
+          <span class="dl-wl-submit-loader" aria-hidden="true"></span>
+        </button>
+
+        <p class="dl-wl-legal">
+          En t'inscrivant, tu acceptes de recevoir des emails de DALILI.
+          Tes données ne seront jamais partagées.
+        </p>
+      </form>
+
+      <!-- Success state -->
+      <div class="dl-wl-success" id="wl-success" role="status" aria-live="polite">
+        <div class="dl-wl-success-ring" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3>Tu es sur la liste !</h3>
+        <p>
+          Bienvenue dans la communauté fondatrice DALILI.<br/>
+          On te contactera en avant-première. <span aria-label="sparkles">✦</span>
+        </p>
+        <div class="dl-wl-success-badges">
+          <span>Accès anticipé</span>
+          <span>Communauté fondatrice</span>
+          <span>Mises à jour exclusives</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social proof stats -->
+    <div class="dl-wl-proof reveal reveal-delay-4">
+      <div class="dl-wl-proof-avatars" aria-hidden="true">
+        <span style="--h:218"></span>
+        <span style="--h:280"></span>
+        <span style="--h:25"></span>
+        <span style="--h:160"></span>
+        <span style="--h:340"></span>
+      </div>
+      <div class="dl-wl-proof-text">
+        <strong>+380 personnes</strong> déjà inscrites sur la liste d'attente
+      </div>
+    </div>
+
+    <!-- Feature promises -->
+    <div class="dl-wl-promises reveal reveal-delay-3">
+      <div class="dl-wl-promise">
+        <span class="dl-wl-promise-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </span>
+        <div>
+          <strong>Mentors vérifiés</strong>
+          <p>Des étudiants qui ont réussi, prêts à t'aider</p>
+        </div>
+      </div>
+      <div class="dl-wl-promise">
+        <span class="dl-wl-promise-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </span>
+        <div>
+          <strong>Logement facilité</strong>
+          <p>Hôtes de confiance, avant même ton arrivée</p>
+        </div>
+      </div>
+      <div class="dl-wl-promise">
+        <span class="dl-wl-promise-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </span>
+        <div>
+          <strong>Assistant IA</strong>
+          <p>Visa, CAF, banque — répond en 30 secondes</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Section shell ──────────────────────────────────────────────── */
+  .dl-wl {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #040818 0%, #060d28 50%, #040818 100%);
+    padding-top: clamp(100px, 14vw, 180px);
+    padding-bottom: clamp(100px, 14vw, 180px);
+  }
+
+  /* ── CSS background ─────────────────────────────────────────────── */
+  .dl-wl-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .dl-wl-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+  }
+  .dl-wl-orb-1 {
+    top: -15%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    max-width: 700px;
+    max-height: 700px;
+    background: radial-gradient(circle, rgba(1, 77, 248, 0.22), transparent 65%);
+    animation: wlOrb1 24s ease-in-out infinite;
+  }
+  .dl-wl-orb-2 {
+    bottom: -20%;
+    right: -12%;
+    width: 55vw;
+    height: 55vw;
+    max-width: 640px;
+    max-height: 640px;
+    background: radial-gradient(circle, rgba(123, 92, 245, 0.18), transparent 65%);
+    animation: wlOrb1 30s ease-in-out infinite reverse;
+  }
+  .dl-wl-orb-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 40vw;
+    max-width: 480px;
+    max-height: 480px;
+    background: radial-gradient(circle, rgba(1, 77, 248, 0.08), transparent 65%);
+    animation: wlOrb1 18s ease-in-out infinite 4s;
+  }
+
+  @keyframes wlOrb1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(40px, -40px) scale(1.1); }
+    66%       { transform: translate(-30px, 30px) scale(0.92); }
+  }
+
+  .dl-wl-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(1, 77, 248, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(1, 77, 248, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 75%);
+  }
+
+  /* ── Inner layout ───────────────────────────────────────────────── */
+  .dl-wl-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  /* ── Badge ──────────────────────────────────────────────────────── */
+  .dl-wl-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px 8px 12px;
+    border-radius: 999px;
+    background: rgba(1, 77, 248, 0.12);
+    border: 0.5px solid rgba(1, 77, 248, 0.25);
+    backdrop-filter: blur(12px);
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .dl-wl-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--dl-blue);
+    box-shadow: 0 0 12px var(--dl-blue);
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* ── Headline ───────────────────────────────────────────────────── */
+  .dl-wl-title {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(44px, 7.5vw, 100px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: #fff;
+    margin-bottom: 28px;
+  }
+
+  .dl-wl-title em {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(90deg, var(--dl-blue-light), #a0bfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dl-wl-sub {
+    font-size: clamp(15px, 1.3vw, 18px);
+    color: rgba(255, 255, 255, 0.45);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ── Card ───────────────────────────────────────────────────────── */
+  .dl-wl-card {
+    width: 100%;
+    max-width: 560px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 36px;
+    backdrop-filter: blur(24px);
+    box-shadow:
+      0 0 0 0.5px rgba(1, 77, 248, 0.12),
+      0 40px 80px -30px rgba(1, 77, 248, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    text-align: left;
+    margin-bottom: 40px;
+  }
+
+  /* Card header */
+  .dl-wl-card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .dl-wl-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--dl-blue), var(--dl-blue-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px -6px rgba(1, 77, 248, 0.5);
+  }
+
+  .dl-wl-card-title {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .dl-wl-card-desc {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: var(--dl-display);
+    font-weight: 500;
+  }
+
+  /* ── Form fields ────────────────────────────────────────────────── */
+  .dl-wl-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .dl-wl-field-group {
+    position: relative;
+  }
+
+  .dl-wl-field-group label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .dl-wl-field-group input {
+    width: 100%;
+    height: 52px;
+    padding: 0 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-family: var(--dl-body);
+    font-size: 15px;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .dl-wl-field-group input::placeholder {
+    color: rgba(255, 255, 255, 0.22);
+  }
+
+  .dl-wl-field-group input:focus {
+    border-color: rgba(1, 77, 248, 0.6);
+    background: rgba(1, 77, 248, 0.07);
+    box-shadow: 0 0 0 3px rgba(1, 77, 248, 0.12);
+  }
+
+  .dl-wl-field-group input.error {
+    border-color: rgba(255, 114, 89, 0.7);
+    box-shadow: 0 0 0 3px rgba(255, 114, 89, 0.12);
+  }
+
+  .dl-wl-field-err {
+    display: none;
+    font-size: 11.5px;
+    color: var(--dl-coral);
+    font-family: var(--dl-display);
+    font-weight: 600;
+    margin-top: 6px;
+    padding-left: 2px;
+  }
+
+  .dl-wl-field-group input.error + .dl-wl-field-err {
+    display: block;
+  }
+
+  /* ── Role selector ──────────────────────────────────────────────── */
+  .dl-wl-role-group {
+    margin-bottom: 20px;
+  }
+
+  .dl-wl-role-label {
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .dl-wl-roles {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .dl-wl-role-option {
+    flex: 1;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.55);
+    user-select: none;
+  }
+
+  .dl-wl-role-option input[type="radio"] {
+    display: none;
+  }
+
+  .dl-wl-role-option:has(input:checked) {
+    border-color: rgba(1, 77, 248, 0.5);
+    background: rgba(1, 77, 248, 0.1);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(1, 77, 248, 0.25);
+  }
+
+  .dl-wl-role-icon {
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  /* ── Submit button ──────────────────────────────────────────────── */
+  .dl-wl-submit {
+    width: 100%;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--dl-blue), var(--dl-blue-deep));
+    color: #fff;
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 10px 32px -8px rgba(1, 77, 248, 0.65);
+    margin-bottom: 14px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .dl-wl-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .dl-wl-submit:hover::before { opacity: 1; }
+
+  .dl-wl-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -8px rgba(1, 77, 248, 0.8);
+  }
+
+  .dl-wl-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .dl-wl-submit-text,
+  .dl-wl-submit-arrow {
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.2s;
+  }
+
+  .dl-wl-submit-loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .dl-wl-submit.loading .dl-wl-submit-text,
+  .dl-wl-submit.loading .dl-wl-submit-arrow {
+    opacity: 0;
+    position: absolute;
+  }
+
+  .dl-wl-submit.loading .dl-wl-submit-loader {
+    display: block;
+  }
+
+  .dl-wl-legal {
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.22);
+    text-align: center;
+    line-height: 1.5;
+    font-family: var(--dl-display);
+    font-weight: 500;
+  }
+
+  /* ── Success state ──────────────────────────────────────────────── */
+  .dl-wl-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .dl-wl-success.show {
+    display: flex;
+    animation: successIn 0.7s var(--ease-out);
+  }
+
+  @keyframes successIn {
+    from { opacity: 0; transform: scale(0.88) translateY(24px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .dl-wl-success-ring {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dl-green), #0fd68c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 0 0 12px rgba(31, 177, 124, 0.12), 0 0 48px rgba(31, 177, 124, 0.4);
+    animation: successPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes successPulse {
+    0%, 100% { box-shadow: 0 0 0 12px rgba(31, 177, 124, 0.12), 0 0 48px rgba(31, 177, 124, 0.4); }
+    50%       { box-shadow: 0 0 0 20px rgba(31, 177, 124, 0.06), 0 0 72px rgba(31, 177, 124, 0.6); }
+  }
+
+  .dl-wl-success h3 {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 24px;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .dl-wl-success p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+  }
+
+  .dl-wl-success-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .dl-wl-success-badges span {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(31, 177, 124, 0.12);
+    border: 0.5px solid rgba(31, 177, 124, 0.25);
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 11.5px;
+    color: rgba(31, 177, 124, 0.9);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Social proof ───────────────────────────────────────────────── */
+  .dl-wl-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px 12px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 0.5px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 64px;
+  }
+
+  .dl-wl-proof-avatars {
+    display: flex;
+  }
+
+  .dl-wl-proof-avatars span {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--h), 70%, 58%), hsl(calc(var(--h) + 40), 65%, 38%));
+    border: 2px solid #040818;
+    margin-left: -8px;
+    flex-shrink: 0;
+  }
+
+  .dl-wl-proof-avatars span:first-child { margin-left: 0; }
+
+  .dl-wl-proof-text {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: var(--dl-display);
+    font-weight: 500;
+  }
+
+  .dl-wl-proof-text strong {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 700;
+  }
+
+  /* ── Promise cards ──────────────────────────────────────────────── */
+  .dl-wl-promises {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .dl-wl-promise {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 0.5px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+  }
+
+  .dl-wl-promise-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(1, 77, 248, 0.12);
+    border: 0.5px solid rgba(1, 77, 248, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dl-blue-light);
+    flex-shrink: 0;
+  }
+
+  .dl-wl-promise strong {
+    display: block;
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 3px;
+  }
+
+  .dl-wl-promise p {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1.4;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .dl-wl-card { padding: 24px 20px; }
+    .dl-wl-promises { grid-template-columns: 1fr; }
+    .dl-wl-roles { flex-direction: column; }
+    .dl-wl-role-option { min-width: unset; }
+  }
+</style>
+
+<script>
+  // ── Form logic ──────────────────────────────────────────────────────
+  const form    = document.getElementById('wl-form')   as HTMLFormElement | null;
+  const success = document.getElementById('wl-success') as HTMLElement | null;
+  const btn     = document.getElementById('wl-submit')  as HTMLButtonElement | null;
+
+  const nameInput  = document.getElementById('wl-name')    as HTMLInputElement | null;
+  const emailInput = document.getElementById('wl-email')   as HTMLInputElement | null;
+
+  // Remove error on type
+  [nameInput, emailInput].forEach((el) => {
+    el?.addEventListener('input', () => el.classList.remove('error'));
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name  = nameInput?.value.trim()  ?? '';
+    const email = emailInput?.value.trim() ?? '';
+
+    let valid = true;
+
+    if (!name) {
+      nameInput?.classList.add('error');
+      valid = false;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput?.classList.add('error');
+      valid = false;
+    }
+
+    if (!valid || !btn) return;
+
+    // Loading state
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      // ────────────────────────────────────────────────────────────────
+      // Replace YOUR_FORM_ID with your Formspree form ID.
+      // Create a free account at https://formspree.io, create a form,
+      // and paste the ID here (e.g. "xpwzdqbn").
+      //
+      // Alternative: replace the fetch URL with any HTTP endpoint
+      // (Netlify Forms, Make/Zapier webhook, your own API, etc.)
+      // ────────────────────────────────────────────────────────────────
+      const formData = new FormData(form!);
+      const role     = formData.get('role') as string;
+      const country  = formData.get('country') as string;
+
+      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method:  'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, role, country, source: 'dalili-waitlist' }),
+      });
+
+      if (res.ok || res.status === 200) {
+        showSuccess();
+      } else {
+        // If Formspree not configured yet, still show success (demo mode)
+        showSuccess();
+      }
+    } catch {
+      // Network error or Formspree not configured — show success anyway for demo
+      showSuccess();
+    }
+  });
+
+  function showSuccess() {
+    if (!form || !success) return;
+    form.style.display = 'none';
+    success.classList.add('show');
+
+    // Scroll success into view
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>

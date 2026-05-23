@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = 'DALILI — Ton arrivée en France commence ici',
+  description = "DALILI accompagne les étudiants internationaux dans leur arrivée en France : mentors, hôtes, communauté, démarches. Tu n'es plus seul·e.",
+  image = '/og-image.jpg',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#02040F" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="DALILI" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Performance: preconnect to fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" />
+
+    <!-- Structured data for organization -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DALILI",
+      "url": "https://dalili.fr",
+      "description": description,
+      "sameAs": [
+        "https://instagram.com/dalili.app"
+      ]
+    })} />
+  </head>
+  <body>
+    <!-- Dual-layer custom cursor -->
+    <div class="dl-cursor-dot"  id="cursor-dot"  aria-hidden="true"></div>
+    <div class="dl-cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <slot />
+
+    <script>
+      // ── Dual-layer cursor (dot instant, ring lagged) ──────────────
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+
+      if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+        let rx = -100, ry = -100;
+        let cx = -100, cy = -100;
+
+        document.addEventListener('mousemove', (e) => {
+          cx = e.clientX; cy = e.clientY;
+          dot.style.left = cx + 'px';
+          dot.style.top  = cy + 'px';
+        }, { passive: true });
+
+        // Ring follows with lerp
+        const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+        const trackRing = () => {
+          rx = lerp(rx, cx, 0.12);
+          ry = lerp(ry, cy, 0.12);
+          ring.style.left = rx + 'px';
+          ring.style.top  = ry + 'px';
+          requestAnimationFrame(trackRing);
+        };
+        trackRing();
+
+        document.addEventListener('mousedown', () => ring.classList.add('click'));
+        document.addEventListener('mouseup',   () => ring.classList.remove('click'));
+
+        const hoverEls = () =>
+          document.querySelectorAll('a, button, [data-cursor="hover"], input, label');
+
+        const attachHover = () => {
+          hoverEls().forEach((el) => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+          });
+        };
+
+        attachHover();
+        // Re-attach after any navigation
+        new MutationObserver(attachHover).observe(document.body, { childList: true, subtree: true });
+      }
+
+      // ── Reveal on scroll (IntersectionObserver) ───────────────────
+      const revealEls = document.querySelectorAll('.reveal, .reveal-clip');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          }),
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('in'));
+      }
+    </script>
+  </body>
+</html>

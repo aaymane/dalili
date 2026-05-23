@@ -1,0 +1,290 @@
+---
+// DALILI · Final install CTA + footer
+---
+
+<section class="dl-install" id="download">
+  <div class="dl-install-bg" aria-hidden="true">
+    <div class="dl-install-orb dl-install-orb-1"></div>
+    <div class="dl-install-orb dl-install-orb-2"></div>
+  </div>
+
+  <div class="container">
+    <div class="dl-install-inner reveal">
+      <div class="dl-eyebrow" style="color: rgba(255,255,255,0.7)">L'app DALILI</div>
+      <h2 class="dl-install-title">
+        Ton arrivée<br/>
+        <em>en téléchargement.</em>
+      </h2>
+      <p class="dl-install-lead">
+        Disponible sur App Store et Google Play. Gratuite. Sans publicité.
+      </p>
+
+      <div class="dl-install-cta">
+        <a href="#" class="dl-store dl-store-white" data-cursor="hover" aria-label="Télécharger sur l'App Store">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--dl-ink)" aria-hidden="true">
+            <path d="M17.05 12.04c-.03-2.7 2.2-4 2.3-4.06-1.25-1.83-3.2-2.08-3.9-2.11-1.66-.17-3.24.97-4.08.97-.84 0-2.14-.95-3.52-.92-1.81.03-3.48 1.05-4.41 2.67-1.88 3.26-.48 8.08 1.35 10.72.9 1.29 1.96 2.74 3.36 2.69 1.35-.05 1.86-.87 3.49-.87 1.63 0 2.09.87 3.52.84 1.45-.03 2.37-1.32 3.26-2.62 1.03-1.5 1.45-2.96 1.47-3.03-.03-.01-2.82-1.08-2.85-4.29zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.61 3.16-1.48z"/>
+          </svg>
+          <span class="dl-store-text">
+            <span class="dl-store-small">Télécharger sur</span>
+            <span class="dl-store-big">App Store</span>
+          </span>
+        </a>
+        <a href="#" class="dl-store dl-store-white" data-cursor="hover" aria-label="Disponible sur Google Play">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path fill="var(--dl-ink)" d="M5.6 2.3c-.4-.2-.8-.2-1.1 0L18.3 9.5l-2.5-2.5L5.6 2.3zM4 3.5v17c0 .5.2.9.5 1.2l9.6-9.7L4.5 2.3c-.3.2-.5.7-.5 1.2zM18.3 14.5L15.8 17l-10.2 4.7c.4.2.8.2 1.1 0l12.6-7.2-1-0zM21.9 11.3l-3.6-2.1-2.7 2.8 2.7 2.7 3.6-2.1c.6-.4.6-1 0-1.3z"/>
+          </svg>
+          <span class="dl-store-text">
+            <span class="dl-store-small">Disponible sur</span>
+            <span class="dl-store-big">Google Play</span>
+          </span>
+        </a>
+      </div>
+
+      <p class="dl-install-fineprint">
+        100 % gratuite à l'installation · Sans publicité · Données chiffrées
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="dl-footer">
+  <div class="container">
+    <div class="dl-footer-top">
+      <div class="dl-footer-brand">
+        <a href="/" class="dl-wordmark">
+          DALI<span class="dl-wordmark-l">L<span class="dl-wordmark-dot" aria-hidden="true"></span></span>I
+        </a>
+        <p>Ton arrivée en France<br/>commence ici.</p>
+      </div>
+
+      <div class="dl-footer-cols">
+        <div>
+          <h4>Produit</h4>
+          <a href="/#ecosystem">L'écosystème</a>
+          <a href="/#download">Télécharger</a>
+          <a href="/blog">Guides & Blog</a>
+        </div>
+        <div>
+          <h4>Équipe</h4>
+          <a href="/#story">Notre histoire</a>
+          <a href="mailto:hello@dalili.fr">Nous contacter</a>
+          <a href="https://instagram.com/dalili.app" target="_blank" rel="noopener">Instagram</a>
+        </div>
+        <div>
+          <h4>Légal</h4>
+          <a href="/legal/mentions">Mentions légales</a>
+          <a href="/legal/privacy">Confidentialité</a>
+          <a href="/legal/terms">CGU</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="dl-footer-bottom">
+      <span>© 2026 DALILI · Tous droits réservés</span>
+      <span class="dl-footer-made">Fait avec ❤ par Aymane, Mouad & Mouhcine</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ========== Install ========== */
+  .dl-install {
+    position: relative;
+    padding: clamp(120px, 16vw, 200px) 0;
+    background: linear-gradient(135deg, var(--dl-midnight) 0%, var(--dl-navy) 100%);
+    color: #fff;
+    overflow: hidden;
+  }
+  .dl-install-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .dl-install-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+  }
+  .dl-install-orb-1 {
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(1, 77, 248, 0.45), transparent 60%);
+    animation: orbDrift 24s ease-in-out infinite;
+  }
+  .dl-install-orb-2 {
+    bottom: -20%;
+    right: -10%;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(122, 92, 245, 0.4), transparent 60%);
+    animation: orbDrift 28s ease-in-out infinite reverse;
+  }
+
+  .dl-install-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .dl-install-inner .dl-eyebrow {
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+  .dl-install-title {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(44px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .dl-install-title em {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dl-blue-light);
+  }
+  .dl-install-lead {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-size: clamp(18px, 1.8vw, 24px);
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 48px;
+  }
+
+  .dl-install-cta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .dl-store-white {
+    background: rgba(255,255,255,0.08);
+    color: var(--dl-text-1);
+    border: 0.5px solid rgba(255,255,255,0.15);
+    box-shadow: 0 16px 36px -10px rgba(1, 77, 248, 0.35);
+  }
+  .dl-store-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 46px -10px rgba(1, 77, 248, 0.5);
+  }
+
+  .dl-install-fineprint {
+    font-family: var(--dl-display);
+    font-weight: 500;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.05em;
+  }
+
+  /* ========== Footer ========== */
+  .dl-footer {
+    background: var(--dl-ink);
+    color: #fff;
+    padding: 64px 0 28px;
+  }
+  .dl-footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 64px;
+    padding-bottom: 48px;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+  }
+  .dl-footer-brand .dl-wordmark {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    font-family: var(--dl-display);
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .dl-footer-brand .dl-wordmark-l {
+    color: var(--dl-blue-light);
+    position: relative;
+  }
+  .dl-footer-brand .dl-wordmark-dot {
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dl-blue-light);
+    box-shadow: 0 0 10px var(--dl-blue-light);
+  }
+  .dl-footer-brand p {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+  }
+
+  .dl-footer-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .dl-footer-cols h4 {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 18px;
+  }
+  .dl-footer-cols a {
+    display: block;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 6px 0;
+    transition: color 0.2s, transform 0.2s var(--ease-out);
+  }
+  .dl-footer-cols a:hover {
+    color: var(--dl-blue-light);
+    transform: translateX(3px);
+  }
+
+  .dl-footer-bottom {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--dl-display);
+    font-weight: 500;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .dl-footer-made {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  @keyframes orbDrift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(50px, -40px) scale(1.1); }
+    66% { transform: translate(-40px, 30px) scale(0.95); }
+  }
+
+  @media (max-width: 820px) {
+    .dl-footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .dl-footer-cols { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .dl-footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+</style>

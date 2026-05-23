@@ -1,0 +1,255 @@
+---
+// DALILI · The ecosystem — 3 pillars (mentors, hosts, community)
+
+const pillars = [
+  {
+    title: 'Mentorship',
+    icon: 'sparkles',
+    accent: '#014df8',
+    gradient: 'linear-gradient(135deg, #6E9BFF 0%, #014df8 100%)',
+    headline: 'Un mentor qui a fait le chemin avant toi.',
+    body: "Visa refusé. Logement introuvable. CAF incompréhensible. Tu n'as pas à galérer seul·e — un étudiant qui est passé par là te guide. 30 minutes peuvent changer ton année.",
+    bullets: [
+      '2 840 mentors actifs',
+      'Match selon ta nationalité, ton parcours, ta ville',
+      'Sessions à partir de 19 €',
+    ],
+  },
+  {
+    title: 'Hosting',
+    icon: 'home',
+    accent: '#F5B544',
+    gradient: 'linear-gradient(135deg, #FFD8A8 0%, #F5B544 100%)',
+    headline: 'Une famille pour tes premières nuits.',
+    body: "Pas un Airbnb. Un toit chez quelqu'un qui te ressemble — étudiant, expatrié, ou famille qui a accueilli avant. Le temps de poser tes valises et trouver ton vrai chez-toi.",
+    bullets: [
+      'Hôtes vérifiés dans 23 villes',
+      'Du dépannage 3 nuits au logement transitoire',
+      '25 €/nuit en moyenne',
+    ],
+  },
+  {
+    title: 'Community',
+    icon: 'globe',
+    accent: '#1FB17C',
+    gradient: 'linear-gradient(135deg, #6DDDB1 0%, #1FB17C 100%)',
+    headline: 'Une communauté qui t\'attend déjà.',
+    body: "Des groupes par nationalité, par ville, par université. Des soirées d'arrivée. Des conseils en temps réel. Le sentiment d'arriver quelque part où on t'attend.",
+    bullets: [
+      '12 000 étudiants connectés',
+      'Soirées d\'arrivée chaque mois',
+      'Communautés actives 24h/24',
+    ],
+  },
+];
+
+const icons = {
+  sparkles: 'M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3z',
+  home: 'M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-3v-7h-8v7H5a2 2 0 0 1-2-2v-9z',
+  globe: 'M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18',
+};
+---
+
+<section class="dl-ecosystem" id="ecosystem">
+  <div class="container">
+    <div class="dl-eco-head">
+      <div class="dl-eyebrow reveal" style="color: var(--dl-blue)">L'écosystème</div>
+      <h2 class="dl-eco-title reveal reveal-delay-1">
+        Trois piliers.<br/>
+        <em>Une expérience.</em>
+      </h2>
+      <p class="dl-eco-lead reveal reveal-delay-2">
+        DALILI n'est pas une simple appli. C'est un écosystème humain
+        qui te porte avant, pendant, et après ton arrivée.
+      </p>
+    </div>
+
+    <div class="dl-eco-pillars">
+      {pillars.map((p, i) => (
+        <article class={`dl-pillar reveal reveal-delay-${i + 1}`} style={`--accent: ${p.accent}`}>
+          <div class="dl-pillar-icon" style={`background: ${p.gradient}; box-shadow: 0 14px 32px -10px ${p.accent}88`}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d={icons[p.icon as keyof typeof icons]} />
+            </svg>
+          </div>
+          <div class="dl-pillar-tag">{p.title}</div>
+          <h3 class="dl-pillar-headline">{p.headline}</h3>
+          <p class="dl-pillar-body">{p.body}</p>
+          <ul class="dl-pillar-bullets">
+            {p.bullets.map((b) => (
+              <li>
+                <span class="dl-bullet-dot" aria-hidden="true"></span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          <div class="dl-pillar-glow" aria-hidden="true"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dl-ecosystem {
+    position: relative;
+    padding: clamp(100px, 14vw, 200px) 0;
+    background: var(--dl-bg-1);
+    overflow: hidden;
+  }
+  .dl-ecosystem::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 500px at 50% -10%, rgba(1, 77, 248, 0.10), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Head */
+  .dl-eco-head {
+    max-width: 720px;
+    margin: 0 auto 100px;
+    text-align: center;
+  }
+  .dl-eco-head .dl-eyebrow {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .dl-eco-title {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(36px, 5.5vw, 78px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--dl-ink);
+    margin-bottom: 24px;
+  }
+  .dl-eco-title em {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dl-blue);
+    letter-spacing: -0.01em;
+  }
+  .dl-eco-lead {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.5;
+    color: var(--dl-ink-2);
+  }
+
+  /* Pillars grid */
+  .dl-eco-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .dl-pillar {
+    position: relative;
+    padding: 40px 32px 36px;
+    border-radius: var(--r-lg);
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.07);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), border-color 0.3s;
+  }
+  .dl-pillar:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px -20px rgba(1, 77, 248, 0.18);
+    border-color: rgba(1,77,248,0.18);
+  }
+  .dl-pillar:hover .dl-pillar-glow { opacity: 1; transform: scale(1.2); }
+  .dl-pillar:hover .dl-pillar-icon { transform: scale(1.06) rotate(-3deg); }
+
+  .dl-pillar-glow {
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, var(--accent), transparent 65%);
+    opacity: 0.15;
+    pointer-events: none;
+    transition: opacity 0.5s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+
+  .dl-pillar-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    transition: transform 0.5s var(--ease-bounce);
+    position: relative;
+    z-index: 1;
+  }
+
+  .dl-pillar-tag {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .dl-pillar-headline {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(22px, 2vw, 26px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--dl-ink);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dl-pillar-body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--dl-ink-2);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dl-pillar-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 0.5px solid rgba(10, 14, 31, 0.08);
+    position: relative;
+    z-index: 1;
+  }
+  .dl-pillar-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--dl-ink-2);
+  }
+  .dl-bullet-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .dl-eco-pillars {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  }
+</style>

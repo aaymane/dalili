@@ -1,0 +1,122 @@
+---
+// DALILI · Stats — animated counters revealed on scroll
+
+const stats = [
+  { value: 2840, suffix: '+', label: 'mentors actifs', accent: '#014df8' },
+  { value: 23, suffix: '', label: 'villes en France', accent: '#7B5CF5' },
+  { value: 12000, suffix: '+', label: 'étudiants accompagnés', accent: '#1FB17C' },
+  { value: 96, suffix: '%', label: 'taux de satisfaction', accent: '#F5B544' },
+];
+---
+
+<section class="dl-stats">
+  <div class="container">
+    <div class="dl-stats-grid">
+      {stats.map((s) => (
+        <div class="dl-stat reveal">
+          <div class="dl-stat-value" data-target={s.value} data-suffix={s.suffix} style={`color: ${s.accent}`}>
+            0{s.suffix}
+          </div>
+          <div class="dl-stat-label">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dl-stats {
+    padding: clamp(60px, 8vw, 120px) 0;
+    background: var(--dl-midnight);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .dl-stats::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 500px at 20% 50%, rgba(1, 77, 248, 0.25), transparent 60%),
+      radial-gradient(700px 500px at 85% 50%, rgba(122, 92, 245, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+
+  .dl-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dl-stat {
+    text-align: center;
+  }
+
+  .dl-stat-value {
+    font-family: var(--dl-display);
+    font-weight: 800;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dl-stat-label {
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 700px) {
+    .dl-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px 24px;
+    }
+  }
+</style>
+
+<script>
+  // Animated counters using requestAnimationFrame
+  const animateCount = (el: HTMLElement) => {
+    const target = parseInt(el.dataset.target || '0', 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    const startVal = 0;
+
+    const formatNumber = (n: number) =>
+      target >= 1000 ? Math.floor(n).toLocaleString('fr-FR') : Math.floor(n).toString();
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      // Ease-out cubic for graceful deceleration
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = startVal + (target - startVal) * eased;
+      el.textContent = formatNumber(current) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = formatNumber(target) + suffix;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCount(entry.target as HTMLElement);
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    document.querySelectorAll<HTMLElement>('.dl-stat-value').forEach((el) => io.observe(el));
+  }
+</script>

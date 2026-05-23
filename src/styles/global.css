@@ -1,0 +1,540 @@
+/* ============================================================
+   DALILI · Design System v2 — Dark Immersive
+   ============================================================ */
+
+:root {
+  /* ── Brand ── */
+  --dl-blue:       #014df8;
+  --dl-blue-deep:  #0038c4;
+  --dl-blue-light: #4a7eff;
+  --dl-blue-glow:  rgba(1, 77, 248, 0.35);
+  --dl-navy:       #1F2850;
+  --dl-navy-deep:  #0E1330;
+  --dl-midnight:   #060A22;
+
+  /* ── Background ── */
+  --dl-bg:         #02040F;
+  --dl-bg-1:       #06090F;
+  --dl-bg-2:       #0A0E1C;
+  --dl-bg-3:       #111526;
+  --dl-surface:    rgba(255,255,255,0.04);
+  --dl-surface-md: rgba(255,255,255,0.07);
+  --dl-border:     rgba(255,255,255,0.07);
+  --dl-border-md:  rgba(255,255,255,0.12);
+
+  /* ── Text ── */
+  --dl-white:      #FFFFFF;
+  --dl-text-1:     rgba(255,255,255,0.95);
+  --dl-text-2:     rgba(255,255,255,0.60);
+  --dl-text-3:     rgba(255,255,255,0.35);
+  --dl-text-4:     rgba(255,255,255,0.18);
+
+  /* ── Accent ── */
+  --dl-amber:  #F5B544;
+  --dl-coral:  #FF7259;
+  --dl-green:  #1FB17C;
+  --dl-violet: #7B5CF5;
+
+  /* ── Typography ── */
+  --dl-display:   'Montserrat', system-ui, sans-serif;
+  --dl-editorial: 'Instrument Serif', Georgia, serif;
+  --dl-body:      'Open Sans', system-ui, sans-serif;
+  --dl-mono:      'SF Mono', 'Fira Code', monospace;
+
+  /* ── Space ── */
+  --space-2xs: 6px;
+  --space-xs:  10px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  40px;
+  --space-xl:  64px;
+  --space-2xl: 96px;
+  --space-3xl: 140px;
+  --space-4xl: 200px;
+
+  /* ── Radii ── */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-xl: 44px;
+
+  /* ── Easing ── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Layout ── */
+  --max-w:  1300px;
+  --gutter: clamp(20px, 5vw, 60px);
+
+  /* ── Legacy aliases (components written against v1 tokens) ── */
+  --dl-ink:   rgba(255,255,255,0.95);
+  --dl-ink-2: rgba(255,255,255,0.60);
+  --dl-ink-3: rgba(255,255,255,0.35);
+  --dl-ink-4: rgba(255,255,255,0.18);
+  --dl-ink-5: rgba(255,255,255,0.08);
+  --dl-cream:     var(--dl-bg-1);
+  --dl-warm-100:  var(--dl-bg-2);
+  --dl-warm-200:  var(--dl-bg-3);
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--dl-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dl-text-1);
+  background: var(--dl-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   Typography — cinematic scale
+   ============================================================ */
+
+/* Display: for hero giant headlines */
+.dl-display-mega {
+  font-family: var(--dl-display);
+  font-weight: 900;
+  font-size: clamp(72px, 14vw, 190px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--dl-text-1);
+}
+
+.dl-hero-title {
+  font-family: var(--dl-display);
+  font-weight: 800;
+  font-size: clamp(52px, 9vw, 128px);
+  line-height: 0.94;
+  letter-spacing: -0.038em;
+  color: var(--dl-text-1);
+}
+
+.dl-h1 {
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--dl-text-1);
+}
+
+.dl-h2 {
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--dl-text-1);
+}
+
+.dl-h3 {
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--dl-text-1);
+}
+
+.dl-eyebrow {
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--dl-text-3);
+}
+
+.dl-lead {
+  font-family: var(--dl-editorial);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.4;
+  color: var(--dl-text-2);
+}
+
+.dl-body-lg {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.65;
+  color: var(--dl-text-2);
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.section {
+  padding-top:    clamp(80px, 12vw, 160px);
+  padding-bottom: clamp(80px, 12vw, 160px);
+  position: relative;
+}
+
+/* ============================================================
+   Buttons — premium, NOT generic pills
+   ============================================================ */
+
+/* Primary: electric blue squircle with shimmer sweep */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 28px;
+  height: 54px;
+  border-radius: var(--r-sm);
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s var(--ease-expo),
+    box-shadow 0.25s var(--ease-expo),
+    background 0.2s;
+  will-change: transform;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+/* Shimmer sweep on hover */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s var(--ease-out);
+}
+.btn:hover::after { transform: translateX(100%); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--dl-blue), var(--dl-blue-deep));
+  color: #fff;
+  box-shadow:
+    0 0 0 1px rgba(1, 77, 248, 0.4),
+    0 8px 32px -8px rgba(1, 77, 248, 0.6);
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow:
+    0 0 0 1px rgba(1, 77, 248, 0.6),
+    0 16px 48px -8px rgba(1, 77, 248, 0.8);
+}
+.btn-primary:active { transform: translateY(0) scale(0.99); }
+
+/* Ghost: outlined */
+.btn-ghost {
+  background: var(--dl-surface);
+  color: var(--dl-text-1);
+  border: 1px solid var(--dl-border-md);
+  backdrop-filter: blur(12px);
+}
+.btn-ghost:hover {
+  background: var(--dl-surface-md);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+/* Icon arrow inside button — animated right on hover */
+.btn .btn-arrow {
+  transition: transform 0.25s var(--ease-expo);
+}
+.btn:hover .btn-arrow { transform: translateX(3px); }
+
+/* Glow button variant */
+.btn-glow {
+  background: transparent;
+  color: var(--dl-blue-light);
+  border: 1px solid rgba(74, 126, 255, 0.3);
+  box-shadow:
+    inset 0 0 20px rgba(1, 77, 248, 0.06),
+    0 0 20px rgba(1, 77, 248, 0.08);
+}
+.btn-glow:hover {
+  border-color: rgba(74, 126, 255, 0.6);
+  box-shadow:
+    inset 0 0 30px rgba(1, 77, 248, 0.12),
+    0 0 40px rgba(1, 77, 248, 0.2);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   Badge / Pill chip
+   ============================================================ */
+.dl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px 7px 10px;
+  border-radius: 999px;
+  background: var(--dl-surface);
+  border: 0.5px solid var(--dl-border-md);
+  backdrop-filter: blur(16px);
+  font-family: var(--dl-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--dl-text-3);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.dl-chip-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--dl-blue);
+  box-shadow: 0 0 8px var(--dl-blue);
+  flex-shrink: 0;
+  animation: chipPulse 2.2s ease-in-out infinite;
+}
+.dl-chip-dot--green {
+  background: var(--dl-green);
+  box-shadow: 0 0 8px var(--dl-green);
+}
+
+@keyframes chipPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+/* ============================================================
+   Line / divider accent
+   ============================================================ */
+.dl-line {
+  width: 40px; height: 1px;
+  background: linear-gradient(90deg, var(--dl-blue), transparent);
+  display: inline-block;
+}
+
+/* ============================================================
+   Reveal animations — clip-path based (premium feel)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 0.9s var(--ease-expo),
+    transform 0.9s var(--ease-expo);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Clip-path reveal (text lines) */
+.reveal-clip {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1s var(--ease-expo);
+}
+.reveal-clip.in { clip-path: inset(0 0 0% 0); }
+
+/* Stagger delays */
+.reveal-delay-1  { transition-delay: 0.08s; }
+.reveal-delay-2  { transition-delay: 0.16s; }
+.reveal-delay-3  { transition-delay: 0.24s; }
+.reveal-delay-4  { transition-delay: 0.32s; }
+.reveal-delay-5  { transition-delay: 0.40s; }
+.reveal-delay-6  { transition-delay: 0.48s; }
+
+/* ============================================================
+   Noise texture overlay (via CSS, applied to any element)
+   ============================================================ */
+.dl-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Glass card
+   ============================================================ */
+.dl-glass {
+  background: var(--dl-surface);
+  border: 0.5px solid var(--dl-border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.dl-glass-md {
+  background: rgba(255,255,255,0.055);
+  border: 0.5px solid var(--dl-border-md);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(20px);
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-clip { opacity: 1; transform: none; clip-path: none; }
+}
+
+::selection {
+  background: var(--dl-blue);
+  color: #fff;
+}
+
+/* ============================================================
+   Custom cursor — dual-layer (dot + ring)
+   ============================================================ */
+.dl-cursor-dot,
+.dl-cursor-ring {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.dl-cursor-dot {
+  width: 5px; height: 5px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s, opacity 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+
+.dl-cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.35s var(--ease-expo),
+    height 0.35s var(--ease-expo),
+    border-color 0.3s,
+    background 0.3s,
+    opacity 0.3s;
+  mix-blend-mode: difference;
+}
+
+.dl-cursor-ring.hover {
+  width: 64px; height: 64px;
+  border-color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.08);
+}
+
+.dl-cursor-ring.click {
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: transform 0.1s;
+}
+
+@media (hover: none), (max-width: 900px) {
+  .dl-cursor-dot, .dl-cursor-ring { display: none; }
+}
+
+/* ============================================================
+   Section separators (subtle horizontal lines)
+   ============================================================ */
+.dl-sep {
+  width: 100%;
+  height: 0.5px;
+  background: linear-gradient(90deg, transparent, var(--dl-border-md) 30%, var(--dl-border-md) 70%, transparent);
+  margin: 0;
+}
+
+/* ============================================================
+   Form inputs (dark)
+   ============================================================ */
+.dl-input {
+  width: 100%;
+  height: 54px;
+  padding: 0 20px;
+  border-radius: var(--r-sm);
+  background: var(--dl-surface);
+  border: 1px solid var(--dl-border-md);
+  color: var(--dl-text-1);
+  font-family: var(--dl-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+
+.dl-input::placeholder { color: var(--dl-text-4); }
+
+.dl-input:focus {
+  border-color: rgba(1, 77, 248, 0.65);
+  background: rgba(1, 77, 248, 0.07);
+  box-shadow: 0 0 0 4px rgba(1, 77, 248, 0.10);
+}
+
+.dl-input.error {
+  border-color: rgba(255, 114, 89, 0.6);
+  box-shadow: 0 0 0 4px rgba(255, 114, 89, 0.10);
+}
+
+/* ============================================================
+   Scrollbar (webkit)
+   ============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dl-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--dl-bg-3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--dl-navy); }
+
+/* ============================================================
+   Utility helpers
+   ============================================================ */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, var(--dl-blue-light) 0%, #a0bfff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-white {
+  background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

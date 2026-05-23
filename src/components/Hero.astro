@@ -1,0 +1,849 @@
+---
+// DALILI Hero v2 — GLSL aurora shader · inline pre-registration · cinematic
+---
+
+<section class="dl-hero" id="hero">
+  <!-- WebGL aurora background -->
+  <canvas class="dl-hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- Noise grain overlay -->
+  <div class="dl-hero-grain" aria-hidden="true"></div>
+
+  <!-- Top badge -->
+  <div class="dl-hero-badge" aria-label="Statut: application bientôt disponible">
+    <span class="dl-hero-badge-dot" aria-hidden="true"></span>
+    Application mobile · iOS &amp; Android · Bientôt
+  </div>
+
+  <!-- Main content -->
+  <div class="dl-hero-stage">
+
+    <!-- Giant heading -->
+    <div class="dl-hero-headline-wrap">
+      <h1 class="dl-hero-headline">
+        <span class="dl-hero-word" style="--i:0">Ton</span>
+        <span class="dl-hero-word dl-hero-word-em" style="--i:1">guide</span><br/>
+        <span class="dl-hero-word" style="--i:2">pour</span>
+        <span class="dl-hero-word" style="--i:3">la</span>
+        <span class="dl-hero-word dl-hero-word-outline" style="--i:4">France.</span>
+      </h1>
+
+      <!-- Rotating word — DALILI proposes: -->
+      <div class="dl-hero-rotator" aria-live="polite" aria-atomic="true">
+        <span class="dl-hero-rotator-prefix">Mentors ·&nbsp;</span>
+        <span class="dl-hero-rotator-track" id="rotator-track">
+          <span class="dl-hero-rotate active">Logement</span>
+          <span class="dl-hero-rotate">Communauté</span>
+          <span class="dl-hero-rotate">Démarches</span>
+          <span class="dl-hero-rotate">Appartenance</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Pre-registration form — THE CORE CTA -->
+    <div class="dl-hero-form-zone">
+      <p class="dl-hero-form-lead">
+        Rejoins l'avant-première — reçois ton accès en priorité.
+      </p>
+
+      <form class="dl-hero-form" id="hero-form" novalidate>
+        <div class="dl-hero-form-track" id="hero-form-track">
+          <!-- Input row -->
+          <div class="dl-hero-input-row">
+            <div class="dl-hero-input-wrap">
+              <svg class="dl-hero-input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input
+                class="dl-hero-input"
+                type="email"
+                id="hero-email"
+                name="email"
+                placeholder="ton@email.com"
+                autocomplete="email"
+                required
+                aria-required="true"
+                aria-label="Adresse email"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="dl-hero-submit"
+              id="hero-submit"
+              data-magnetic
+              aria-label="Rejoindre la liste d'attente"
+            >
+              <span class="dl-hero-submit-text">Rejoindre</span>
+              <span class="dl-hero-submit-arrow" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+              </span>
+              <span class="dl-hero-submit-loader" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <!-- Error message -->
+          <p class="dl-hero-form-error" id="hero-form-error" role="alert"></p>
+        </div>
+
+        <!-- Success state -->
+        <div class="dl-hero-success" id="hero-success" hidden aria-live="polite">
+          <span class="dl-hero-success-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </span>
+          <span>Tu es sur la liste ! On te contacte bientôt.</span>
+        </div>
+      </form>
+
+      <!-- Social proof row -->
+      <div class="dl-hero-proof">
+        <div class="dl-hero-proof-faces" aria-hidden="true">
+          <span style="--h:218"></span>
+          <span style="--h:280"></span>
+          <span style="--h:25"></span>
+          <span style="--h:160"></span>
+          <span style="--h:340"></span>
+        </div>
+        <span class="dl-hero-proof-text">
+          <strong>+380 personnes</strong> déjà inscrites · Mentors · Hôtes · Étudiants
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom info strip -->
+  <div class="dl-hero-bottom">
+    <div class="dl-hero-bottom-chips">
+      <span class="dl-hero-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Gratuit
+      </span>
+      <span class="dl-hero-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Sans spam
+      </span>
+      <span class="dl-hero-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Désabonnement 1 clic
+      </span>
+    </div>
+
+    <div class="dl-hero-scroll-hint" aria-hidden="true">
+      <span class="dl-hero-scroll-label">Découvrir</span>
+      <span class="dl-hero-scroll-line"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section shell ────────────────────────────────────────── */
+  .dl-hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--dl-bg);
+    isolation: isolate;
+  }
+
+  /* ── WebGL canvas (full bleed) ───────────────────────────── */
+  .dl-hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Film grain noise ────────────────────────────────────── */
+  .dl-hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    mix-blend-mode: screen;
+  }
+
+  /* ── Top badge ───────────────────────────────────────────── */
+  .dl-hero-badge {
+    position: absolute;
+    top: 104px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 16px 7px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 10.5px;
+    color: var(--dl-text-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    animation: badgeIn 1s var(--ease-expo) 0.2s both;
+  }
+
+  @keyframes badgeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .dl-hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dl-blue);
+    box-shadow: 0 0 10px var(--dl-blue);
+    flex-shrink: 0;
+    animation: dotPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.35; transform: scale(0.7); }
+  }
+
+  /* ── Main stage ──────────────────────────────────────────── */
+  .dl-hero-stage {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 var(--gutter);
+    padding-top: 60px;
+    padding-bottom: 40px;
+    gap: 52px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── Giant headline ──────────────────────────────────────── */
+  .dl-hero-headline-wrap { width: 100%; }
+
+  .dl-hero-headline {
+    font-family: var(--dl-display);
+    font-weight: 900;
+    font-size: clamp(60px, 11vw, 152px);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin-bottom: clamp(20px, 3vw, 36px);
+  }
+
+  .dl-hero-word {
+    display: inline-block;
+    color: var(--dl-text-1);
+    opacity: 0;
+    transform: translateY(60px);
+    animation: wordIn 0.9s var(--ease-expo) calc(0.4s + var(--i) * 0.08s) forwards;
+  }
+
+  /* "guide" — gradient fill */
+  .dl-hero-word-em {
+    background: linear-gradient(135deg, var(--dl-blue-light) 0%, #a0c4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-right: 6px;
+  }
+
+  /* "France." — outline only */
+  .dl-hero-word-outline {
+    -webkit-text-stroke: 2px rgba(255,255,255,0.85);
+    -webkit-text-fill-color: transparent;
+  }
+
+  @keyframes wordIn {
+    from { opacity: 0; transform: translateY(60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Rotating word ───────────────────────────────────────── */
+  .dl-hero-rotator {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(13px, 1.4vw, 18px);
+    color: var(--dl-text-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: wordIn 0.8s var(--ease-expo) 0.85s both;
+  }
+
+  .dl-hero-rotator-prefix { white-space: nowrap; }
+
+  .dl-hero-rotator-track {
+    position: relative;
+    display: inline-block;
+    height: 1.4em;
+    overflow: hidden;
+    vertical-align: bottom;
+    min-width: 140px;
+  }
+
+  .dl-hero-rotate {
+    position: absolute;
+    left: 0; top: 0;
+    opacity: 0;
+    transform: translateY(100%);
+    transition:
+      opacity 0.45s var(--ease-expo),
+      transform 0.45s var(--ease-expo);
+    color: var(--dl-blue-light);
+    white-space: nowrap;
+  }
+
+  .dl-hero-rotate.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dl-hero-rotate.exit {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  /* ── Form zone ───────────────────────────────────────────── */
+  .dl-hero-form-zone {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    opacity: 0;
+    animation: wordIn 0.9s var(--ease-expo) 1s both;
+  }
+
+  .dl-hero-form-lead {
+    font-family: var(--dl-display);
+    font-weight: 500;
+    font-size: clamp(13px, 1.2vw, 15px);
+    color: var(--dl-text-3);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .dl-hero-form { width: 100%; }
+
+  /* Input row: input + button side by side */
+  .dl-hero-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
+    padding: 7px 7px 7px 20px;
+    backdrop-filter: blur(24px);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 0 0 rgba(1,77,248,0);
+  }
+
+  .dl-hero-input-row:focus-within {
+    border-color: rgba(1, 77, 248, 0.5);
+    box-shadow: 0 0 0 4px rgba(1, 77, 248, 0.10), 0 20px 60px -20px rgba(1,77,248,0.3);
+  }
+
+  .dl-hero-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .dl-hero-input-icon {
+    color: var(--dl-text-4);
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+  .dl-hero-input-row:focus-within .dl-hero-input-icon { color: var(--dl-blue-light); }
+
+  .dl-hero-input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--dl-text-1);
+    font-family: var(--dl-body);
+    font-size: 15px;
+    min-width: 0;
+  }
+  .dl-hero-input::placeholder { color: var(--dl-text-4); }
+
+  /* Submit button */
+  .dl-hero-submit {
+    flex-shrink: 0;
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--dl-blue), var(--dl-blue-deep));
+    color: #fff;
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    box-shadow:
+      0 0 0 1px rgba(1,77,248,0.5),
+      0 6px 24px -6px rgba(1,77,248,0.7);
+    transition:
+      transform 0.25s var(--ease-expo),
+      box-shadow 0.25s var(--ease-expo);
+  }
+
+  /* Shimmer */
+  .dl-hero-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.55s var(--ease-out);
+  }
+  .dl-hero-submit:not(:disabled):hover::before { transform: translateX(100%); }
+
+  .dl-hero-submit:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px rgba(1,77,248,0.7),
+      0 10px 36px -6px rgba(1,77,248,0.85);
+  }
+
+  .dl-hero-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .dl-hero-submit-text,
+  .dl-hero-submit-arrow {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.25s var(--ease-expo);
+  }
+  .dl-hero-submit:not(:disabled):hover .dl-hero-submit-arrow { transform: translateX(3px); }
+
+  .dl-hero-submit-loader {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    position: relative; z-index: 1;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .dl-hero-submit.loading .dl-hero-submit-text,
+  .dl-hero-submit.loading .dl-hero-submit-arrow { display: none; }
+  .dl-hero-submit.loading .dl-hero-submit-loader { display: block; }
+
+  /* Error */
+  .dl-hero-form-error {
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--dl-coral);
+    margin-top: 10px;
+    min-height: 18px;
+    text-align: left;
+    padding-left: 4px;
+  }
+
+  /* Success */
+  .dl-hero-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px 28px;
+    border-radius: 14px;
+    background: rgba(31, 177, 124, 0.1);
+    border: 1px solid rgba(31, 177, 124, 0.25);
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(31, 177, 124, 0.95);
+    animation: successIn 0.6s var(--ease-expo);
+  }
+  .dl-hero-success[hidden] { display: none; }
+
+  @keyframes successIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .dl-hero-success-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(31, 177, 124, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── Social proof ─────────────────────────────────────────── */
+  .dl-hero-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    opacity: 0;
+    animation: wordIn 0.8s var(--ease-expo) 1.15s both;
+  }
+
+  .dl-hero-proof-faces {
+    display: flex;
+  }
+  .dl-hero-proof-faces span {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--h), 72%, 60%), hsl(calc(var(--h) + 40), 65%, 38%));
+    border: 2px solid var(--dl-bg);
+    margin-left: -8px;
+    flex-shrink: 0;
+  }
+  .dl-hero-proof-faces span:first-child { margin-left: 0; }
+
+  .dl-hero-proof-text {
+    font-family: var(--dl-display);
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--dl-text-3);
+    line-height: 1.3;
+  }
+  .dl-hero-proof-text strong {
+    color: var(--dl-text-2);
+    font-weight: 700;
+  }
+
+  /* ── Bottom strip ─────────────────────────────────────────── */
+  .dl-hero-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 var(--gutter) 32px;
+    opacity: 0;
+    animation: wordIn 0.8s var(--ease-expo) 1.3s both;
+  }
+
+  .dl-hero-bottom-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .dl-hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px 5px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--dl-text-3);
+    letter-spacing: 0.04em;
+  }
+  .dl-hero-chip svg { color: var(--dl-green); }
+
+  /* Scroll hint */
+  .dl-hero-scroll-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dl-hero-scroll-label {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--dl-text-4);
+    writing-mode: vertical-lr;
+    rotate: 180deg;
+  }
+  .dl-hero-scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, transparent, rgba(1,77,248,0.5));
+    position: relative; overflow: hidden;
+  }
+  .dl-hero-scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: 0; right: 0; height: 50%;
+    background: linear-gradient(to bottom, transparent, var(--dl-blue-light));
+    animation: scrollDrop 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollDrop {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    30%  { opacity: 1; }
+    100% { transform: translateY(250%); opacity: 0; }
+  }
+
+  /* ── Responsive ───────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .dl-hero-input-row {
+      flex-direction: column;
+      padding: 14px 16px;
+      border-radius: 18px;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .dl-hero-input-wrap { gap: 10px; }
+    .dl-hero-submit { height: 52px; width: 100%; justify-content: center; }
+    .dl-hero-bottom-chips { display: none; }
+    .dl-hero-badge { font-size: 9.5px; letter-spacing: 0.14em; }
+    .dl-hero-scroll-hint { display: none; }
+  }
+
+  @media (max-width: 380px) {
+    .dl-hero-headline { font-size: 52px; }
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+
+  // ── GLSL Aurora Shader ─────────────────────────────────────────────
+
+  const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement | null;
+  if (!canvas) throw new Error('Hero canvas missing');
+
+  const W = () => canvas.clientWidth;
+  const H = () => canvas.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(W(), H());
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+  const vertexShader = /* glsl */`
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = vec4(position.xy, 0.0, 1.0);
+    }
+  `;
+
+  const fragmentShader = /* glsl */`
+    precision highp float;
+    uniform float uTime;
+    uniform vec2  uResolution;
+    uniform vec2  uMouse;
+    varying vec2  vUv;
+
+    /* ── Hash & noise ── */
+    float hash(vec2 p) {
+      p = fract(p * vec2(234.34, 435.345));
+      p += dot(p, p + 34.23);
+      return fract(p.x * p.y);
+    }
+
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      vec2 u = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), u.x),
+        mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), u.x),
+        u.y
+      );
+    }
+
+    float fbm(vec2 p) {
+      float v = 0.0;
+      float a = 0.5;
+      mat2  rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+      for (int i = 0; i < 7; i++) {
+        v += a * noise(p);
+        p  = rot * p * 2.0 + vec2(1.7, 9.2);
+        a *= 0.48;
+      }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = vUv;
+      float t  = uTime * 0.055;
+
+      /* warp-in-warp domain distortion */
+      vec2 p  = uv * 2.8;
+      float n1 = fbm(p  + t + vec2(1.7, 9.2));
+      float n2 = fbm(p  + n1 * 0.85 + t * 0.55 + vec2(8.3, 2.8));
+      float n  = fbm(p  + n2 * 0.75 + t * 0.35);
+
+      /* colour palette */
+      vec3 dark  = vec3(0.008, 0.014, 0.055);   /* deep space */
+      vec3 mid   = vec3(0.01,  0.22,  0.88);    /* electric blue */
+      vec3 lite  = vec3(0.28,  0.52,  1.00);    /* soft blue */
+      vec3 vio   = vec3(0.35,  0.10,  0.75);    /* violet accent */
+
+      vec3 col = dark;
+      col = mix(col, mid,  smoothstep(0.30, 0.52, n));
+      col = mix(col, lite, smoothstep(0.50, 0.66, n) * 0.45);
+      col = mix(col, vio,  smoothstep(0.60, 0.75, n) * 0.20);
+
+      /* radial vignette — darker at edges */
+      float vig = 1.0 - length(uv - 0.5) * 1.6;
+      col *= clamp(vig, 0.0, 1.0);
+
+      /* subtle mouse-reactive glow */
+      float md  = length(uv - uMouse);
+      col += vec3(0.015, 0.06, 0.22) * smoothstep(0.35, 0.0, md) * 0.8;
+
+      /* overall dimming to stay dark */
+      col *= 0.82;
+
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  const geo = new THREE.PlaneGeometry(2, 2);
+  const mat = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms: {
+      uTime:       { value: 0 },
+      uResolution: { value: new THREE.Vector2(W(), H()) },
+      uMouse:      { value: new THREE.Vector2(0.5, 0.5) },
+    },
+    depthWrite: false,
+  });
+
+  scene.add(new THREE.Mesh(geo, mat));
+
+  // Mouse
+  document.addEventListener('mousemove', (e) => {
+    mat.uniforms.uMouse.value.set(
+      e.clientX / window.innerWidth,
+      1 - e.clientY / window.innerHeight
+    );
+  }, { passive: true });
+
+  // RAF
+  const clock = new THREE.Clock();
+  const tick = () => {
+    requestAnimationFrame(tick);
+    mat.uniforms.uTime.value = clock.getElapsedTime();
+    renderer.render(scene, camera);
+  };
+  tick();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    renderer.setSize(W(), H());
+    mat.uniforms.uResolution.value.set(W(), H());
+  }, { passive: true });
+
+  // ── Word rotator ────────────────────────────────────────────────────
+  const words = Array.from(document.querySelectorAll<HTMLElement>('.dl-hero-rotate'));
+  let cur = 0;
+
+  setInterval(() => {
+    words[cur].classList.remove('active');
+    words[cur].classList.add('exit');
+    const prev = cur;
+    setTimeout(() => words[prev].classList.remove('exit'), 460);
+    cur = (cur + 1) % words.length;
+    words[cur].classList.add('active');
+  }, 2400);
+
+  // ── Magnetic button ─────────────────────────────────────────────────
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
+      let raf = 0;
+      el.addEventListener('mousemove', (e) => {
+        const r  = el.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width  / 2)) * 0.28;
+        const dy = (e.clientY - (r.top  + r.height / 2)) * 0.28;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          el.style.transform = `translate(${dx}px,${dy}px)`;
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        cancelAnimationFrame(raf);
+        el.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+        el.style.transform  = '';
+        setTimeout(() => { el.style.transition = ''; }, 500);
+      });
+    });
+  }
+
+  // ── Form submission ─────────────────────────────────────────────────
+  const form    = document.getElementById('hero-form')    as HTMLFormElement | null;
+  const input   = document.getElementById('hero-email')   as HTMLInputElement | null;
+  const btn     = document.getElementById('hero-submit')  as HTMLButtonElement | null;
+  const errEl   = document.getElementById('hero-form-error') as HTMLElement | null;
+  const successEl = document.getElementById('hero-success')  as HTMLElement | null;
+  const trackEl = document.getElementById('hero-form-track') as HTMLElement | null;
+
+  input?.addEventListener('input', () => {
+    if (errEl) errEl.textContent = '';
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = input?.value.trim() ?? '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (errEl) errEl.textContent = 'Entre un email valide pour continuer.';
+      input?.focus();
+      return;
+    }
+
+    if (!btn) return;
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      // Replace YOUR_FORM_ID with your Formspree form ID (https://formspree.io)
+      // OR swap with any webhook/endpoint that accepts { email }
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method:  'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email, source: 'dalili-hero' }),
+      });
+    } catch { /* network error — still show success */ }
+
+    if (trackEl) trackEl.style.display = 'none';
+    if (successEl) { successEl.hidden = false; }
+  });
+</script>

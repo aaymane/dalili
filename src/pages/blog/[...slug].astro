@@ -1,0 +1,229 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Install from '../../components/Install.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const categoryColors: Record<string, string> = {
+  'Visa': '#014df8',
+  'Logement': '#F5B544',
+  'Démarches': '#7B5CF5',
+  'Vie étudiante': '#1FB17C',
+  'Communauté': '#FF7259',
+};
+const accent = categoryColors[post.data.category];
+---
+
+<Base
+  title={`${post.data.title} — DALILI`}
+  description={post.data.description}
+>
+  <Nav />
+
+  <article class="dl-article">
+    <header class="dl-article-hero">
+      <div class="container">
+        <a href="/blog" class="dl-article-back">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          Tous les guides
+        </a>
+
+        <div class="dl-article-meta">
+          <span class="dl-blog-cat" style={`color: ${accent}`}>
+            <span class="dl-blog-cat-dot" style={`background: ${accent}`}></span>
+            {post.data.category}
+          </span>
+          <span>·</span>
+          <span>{formatDate(post.data.pubDate)}</span>
+          <span>·</span>
+          <span>{post.data.readTime} min de lecture</span>
+        </div>
+
+        <h1 class="dl-article-title">{post.data.title}</h1>
+        <p class="dl-article-lead">{post.data.description}</p>
+
+        <div class="dl-article-author">
+          <span>Par {post.data.author}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="dl-article-body container">
+      <div class="dl-prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <Install />
+</Base>
+
+<style>
+  .dl-article {
+    padding-top: 100px;
+    background: var(--dl-cream);
+  }
+
+  /* Hero */
+  .dl-article-hero {
+    padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 7vw, 80px);
+    border-bottom: 0.5px solid rgba(10, 14, 31, 0.08);
+  }
+  .dl-article-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--dl-ink-3);
+    margin-bottom: 32px;
+    transition: color 0.2s, transform 0.2s var(--ease-out);
+  }
+  .dl-article-back:hover {
+    color: var(--dl-ink);
+    transform: translateX(-3px);
+  }
+
+  .dl-article-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 12.5px;
+    color: var(--dl-ink-3);
+    margin-bottom: 24px;
+  }
+  .dl-blog-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .dl-blog-cat-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+
+  .dl-article-title {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--dl-ink);
+    margin-bottom: 20px;
+    max-width: 920px;
+  }
+  .dl-article-lead {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.5;
+    color: var(--dl-ink-2);
+    max-width: 720px;
+    margin-bottom: 28px;
+  }
+  .dl-article-author {
+    font-family: var(--dl-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--dl-ink-3);
+  }
+
+  /* Body */
+  .dl-article-body {
+    padding: clamp(48px, 8vw, 100px) 0 clamp(60px, 10vw, 120px);
+  }
+  .dl-prose {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--dl-ink);
+  }
+  .dl-prose :global(h2) {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--dl-ink);
+    margin: 56px 0 18px;
+  }
+  .dl-prose :global(h3) {
+    font-family: var(--dl-display);
+    font-weight: 700;
+    font-size: clamp(20px, 2.2vw, 24px);
+    line-height: 1.2;
+    color: var(--dl-ink);
+    margin: 40px 0 14px;
+  }
+  .dl-prose :global(p) {
+    margin: 0 0 22px;
+    color: var(--dl-ink-2);
+  }
+  .dl-prose :global(a) {
+    color: var(--dl-blue);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .dl-prose :global(a:hover) { color: var(--dl-blue-deep); }
+  .dl-prose :global(strong) { color: var(--dl-ink); font-weight: 700; }
+  .dl-prose :global(em) {
+    font-family: var(--dl-editorial);
+    font-style: italic;
+  }
+  .dl-prose :global(ul), .dl-prose :global(ol) {
+    margin: 0 0 28px;
+    padding-left: 24px;
+  }
+  .dl-prose :global(li) {
+    margin-bottom: 10px;
+    color: var(--dl-ink-2);
+  }
+  .dl-prose :global(blockquote) {
+    margin: 36px 0;
+    padding: 24px 28px;
+    border-left: 3px solid var(--dl-blue);
+    background: rgba(1, 77, 248, 0.04);
+    border-radius: 0 16px 16px 0;
+    font-family: var(--dl-editorial);
+    font-style: italic;
+    font-size: 1.1em;
+    color: var(--dl-ink);
+  }
+  .dl-prose :global(code) {
+    background: rgba(10, 14, 31, 0.06);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.92em;
+  }
+  .dl-prose :global(hr) {
+    border: 0;
+    height: 0.5px;
+    background: rgba(10, 14, 31, 0.12);
+    margin: 56px 0;
+  }
+</style>
