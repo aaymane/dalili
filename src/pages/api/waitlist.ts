@@ -1,22 +1,17 @@
 import type { APIRoute } from 'astro';
-import { appendFile, mkdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { Resend } from 'resend';
 
-const DATA_DIR  = join(process.cwd(), 'data');
-const CSV_FILE  = join(DATA_DIR, 'waitlist.csv');
-
-// Simple email regex
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const NOTIFY_TO   = 'boyayman388@gmail.com';
+const NOTIFY_FROM = 'DALILI Waitlist <onboarding@resend.dev>';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Parse body (JSON or form)
-    let email = '';
+    let email  = '';
     let source = 'unknown';
 
     const ct = request.headers.get('content-type') ?? '';
-
     if (ct.includes('application/json')) {
       const body = await request.json();
       email  = String(body.email  ?? '').trim();
@@ -27,47 +22,61 @@ export const POST: APIRoute = async ({ request }) => {
       source = String(fd.get('source') ?? 'form').trim();
     }
 
-    // Validate
     if (!email || !EMAIL_RE.test(email)) {
       return new Response(
         JSON.stringify({ ok: false, error: 'Email invalide.' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { 'Content-Type': 'application/json' } },
       );
     }
 
-    // Sanitise (strip any commas/newlines that could break CSV)
-    const safeEmail  = email.replace(/[,\n\r"]/g, '');
-    const safeSource = source.replace(/[,\n\r"]/g, '');
-    const timestamp  = new Date().toISOString();
-
-    // Ensure data directory exists
-    if (!existsSync(DATA_DIR)) {
-      await mkdir(DATA_DIR, { recursive: true });
+    const apiKey = import.meta.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('[waitlist] RESEND_API_KEY not set');
+      return new Response(
+        JSON.stringify({ ok: false, error: 'Configuration serveur manquante.' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } },
+      );
     }
 
-    // Write CSV header if new file
-    if (!existsSync(CSV_FILE)) {
-      await appendFile(CSV_FILE, 'timestamp,email,source\n', 'utf8');
-    }
+    const resend = new Resend(apiKey);
+    const timestamp = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
-    // Append row
-    await appendFile(CSV_FILE, `${timestamp},${safeEmail},${safeSource}\n`, 'utf8');
+    await resend.emails.send({
+      from: NOTIFY_FROM,
+      to:   NOTIFY_TO,
+      subject: `Nouvelle inscription DALILI — ${email}`,
+      html: `
+        <div style="font-family:system-ui,sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;background:#02040F;color:#fff;border-radius:12px">
+          <h2 style="margin:0 0 8px;color:#014df8;font-size:22px">Nouvelle inscription liste d'attente</h2>
+          <p style="margin:0 0 24px;color:rgba(255,255,255,0.6);font-size:14px">${timestamp}</p>
+          <table style="width:100%;border-collapse:collapse">
+            <tr>
+              <td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px;width:80px">Email</td>
+              <td style="padding:10px 0;font-weight:600">${email}</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;color:rgba(255,255,255,0.5);font-size:13px">Source</td>
+              <td style="padding:10px 0">${source}</td>
+            </tr>
+          </table>
+        </div>
+      `,
+    });
 
     return new Response(
       JSON.stringify({ ok: true }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
 
   } catch (err) {
     console.error('[waitlist]', err);
     return new Response(
       JSON.stringify({ ok: false, error: 'Erreur serveur.' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
     );
   }
 };
 
-// Block GET
 export const GET: APIRoute = () =>
   new Response(JSON.stringify({ error: 'Method not allowed' }), {
     status: 405,
