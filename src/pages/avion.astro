@@ -1,0 +1,558 @@
+---
+export const prerender = true;
+
+// Manifest data — keeps z-ordering explicit
+const CANVAS = 2500;
+const TEXT   = "Votre voyage commence ici";
+
+const parts = [
+  // Render order: back → front
+  { key: "wing-left",    file: "wing-left.png",    x: 652,  y: 644,  w: 479,  h: 626, ex: -260, ey: -360 },
+  { key: "wing-right",   file: "wing-right.png",   x: 1196, y: 1286, w: 1198, h: 366, ex:  370, ey:  250 },
+  { key: "tail-h",       file: "tail-h.png",        x: 1693, y: 738,  w: 566,  h: 264, ex:  430, ey:  -90 },
+  { key: "tail",         file: "tail.png",          x: 1706, y: 468,  w: 351,  h: 585, ex:  210, ey: -430 },
+  { key: "fuselage",     file: "fuselage.png",      x: 523,  y: 879,  w: 1708, h: 722, ex: -250, ey:  140 },
+  { key: "engine-left",  file: "engine-left.png",   x: 795,  y: 1071, w: 228,  h: 227, ex: -420, ey:  -90 },
+  { key: "engine-right", file: "engine-right.png",  x: 1255, y: 1430, w: 223,  h: 160, ex:  120, ey:  430 },
+  { key: "nose",         file: "nose.png",          x: 509,  y: 1416, w: 329,  h: 185, ex: -420, ey:  230 },
+];
+
+// Plane bounding box in canvas coords (for scaling math in JS)
+// x: 509→2259, y: 468→1601  →  ~1750×1133
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DALILI — Votre voyage commence ici</title>
+  <meta name="description" content="DALILI accompagne les étudiants internationaux à leur arrivée en France." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: #080808; }
+    body {
+      background: #080808;
+      color: #fff;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Scroll container ─────────────────────────────────────── */
+    .ps-scroll {
+      height: 500vh;
+      position: relative;
+    }
+
+    /* ── Sticky viewport ──────────────────────────────────────── */
+    .ps-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Radial spotlight ─────────────────────────────────────── */
+    .ps-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(ellipse 55% 22% at 52% 70%,
+          rgba(255, 255, 255, 0.055) 0%,
+          transparent 100%);
+      z-index: 1;
+      transition: none;
+    }
+
+    /* ── Top vignette so it reads on any bg ──────────────────── */
+    .ps-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% 50%,
+          transparent 40%,
+          rgba(8, 8, 8, 0.65) 100%);
+      z-index: 2;
+    }
+
+    /* ── 2500×2500 coordinate stage ──────────────────────────── */
+    .ps-scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+
+    .ps-stage {
+      position: relative;
+      width: 2500px;
+      height: 2500px;
+      transform-origin: center center;
+      will-change: transform, opacity;
+      flex-shrink: 0;
+    }
+
+    /* ── Plane parts ──────────────────────────────────────────── */
+    .ps-part {
+      position: absolute;
+      display: block;
+      will-change: transform, opacity;
+      transform-origin: center center;
+      /* parts start invisible; JS sets initial explode offsets */
+      opacity: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── Text overlay ─────────────────────────────────────────── */
+    .ps-text {
+      position: absolute;
+      bottom: 13%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(18px, 3.2vw, 50px);
+      font-style: italic;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.95);
+      white-space: nowrap;
+    }
+
+    .ps-text .lt {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(18px);
+      will-change: transform, opacity;
+    }
+
+    /* ── Back button ──────────────────────────────────────────── */
+    .ps-back {
+      position: fixed;
+      top: 24px;
+      left: 28px;
+      z-index: 100;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+    .ps-back:hover { color: #fff; }
+    .ps-back svg { flex-shrink: 0; }
+
+    /* ── Progress dots ────────────────────────────────────────── */
+    .ps-progress {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ps-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .ps-dot.active {
+      background: #fff;
+      transform: scale(1.5);
+    }
+
+    /* ── Grain texture ────────────────────────────────────────── */
+    .ps-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    @media (max-width: 600px) {
+      .ps-text { font-size: clamp(15px, 5vw, 28px); white-space: normal; padding: 0 16px; }
+      .ps-progress { display: none; }
+      .ps-back { top: 16px; left: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Back to home -->
+  <a href="/" class="ps-back" aria-label="Retour">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    DALILI
+  </a>
+
+  <!-- Phase progress dots -->
+  <nav class="ps-progress" aria-hidden="true">
+    <div class="ps-dot" data-phase="0"></div>
+    <div class="ps-dot" data-phase="1"></div>
+    <div class="ps-dot" data-phase="2"></div>
+  </nav>
+
+  <!-- Film grain -->
+  <div class="ps-grain" aria-hidden="true"></div>
+
+  <!-- ── Main scroll section ────────────────────────────────── -->
+  <section class="ps-scroll" aria-label="Animation avion">
+    <div class="ps-sticky">
+
+      <!-- Spotlight under plane -->
+      <div class="ps-spotlight" id="ps-spotlight" aria-hidden="true"></div>
+
+      <!-- Edge vignette -->
+      <div class="ps-vignette" aria-hidden="true"></div>
+
+      <!-- Stage: 2500×2500 coordinate space -->
+      <div class="ps-scene">
+        <div class="ps-stage" id="ps-stage">
+          {parts.map((p) => (
+            <img
+              class="ps-part"
+              id={`part-${p.key}`}
+              src={`/plane-parts/${p.file}`}
+              alt=""
+              aria-hidden="true"
+              draggable="false"
+              data-ex={p.ex}
+              data-ey={p.ey}
+              style={`left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px;`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Animated text -->
+      <div class="ps-text" id="ps-text" aria-live="polite">
+        {TEXT.split('').map((ch) => (
+          <span class="lt" aria-hidden="true">{ch === ' ' ? ' ' : ch}</span>
+        ))}
+        <span class="sr-only">{TEXT}</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Feature cards ──────────────────────────────────────── -->
+  <section class="fc-section">
+    <div class="fc-grid">
+
+      <article class="fc-card" data-card="0">
+        <div class="fc-card-glow"></div>
+        <span class="fc-icon" aria-hidden="true">🎓</span>
+        <h3 class="fc-title">Trouve ton université</h3>
+        <p class="fc-desc">Compare les établissements, explore les filières et prépare ta candidature en toute clarté — avant même d'atterrir.</p>
+        <div class="fc-line"></div>
+        <span class="fc-tag">Universités · Grandes écoles · BTS</span>
+      </article>
+
+      <article class="fc-card" data-card="1">
+        <div class="fc-card-glow"></div>
+        <span class="fc-icon" aria-hidden="true">📋</span>
+        <h3 class="fc-title">Visa &amp; démarches</h3>
+        <p class="fc-desc">Checklist personnalisée, rappels de délais et mentors qui ont déjà vécu chaque étape administrative.</p>
+        <div class="fc-line"></div>
+        <span class="fc-tag">Campus France · CAF · Sécu sociale</span>
+      </article>
+
+      <article class="fc-card" data-card="2">
+        <div class="fc-card-glow"></div>
+        <span class="fc-icon" aria-hidden="true">🏠</span>
+        <h3 class="fc-title">Logement en France</h3>
+        <p class="fc-desc">Résidences étudiantes, familles d'accueil ou colocations — trouve un toit avant ton premier vol.</p>
+        <div class="fc-line"></div>
+        <span class="fc-tag">CROUS · Particuliers · Hôtes DALILI</span>
+      </article>
+
+    </div>
+  </section>
+
+  <style>
+    /* ── Cards section ────────────────────────────────────────── */
+    .fc-section {
+      background: #080808;
+      padding: clamp(80px, 12vw, 140px) clamp(20px, 6vw, 80px);
+    }
+
+    .fc-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* ── Single card ──────────────────────────────────────────── */
+    .fc-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(79, 142, 247, 0.18);
+      border-radius: 20px;
+      padding: 36px 30px 32px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      /* start state — GSAP will animate these */
+      opacity: 0;
+      transform: translateY(60px);
+      will-change: transform, opacity;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: border-color 0.3s;
+    }
+
+    .fc-card:hover {
+      border-color: rgba(79, 142, 247, 0.42);
+    }
+
+    /* Accent glow that tracks hover */
+    .fc-card-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 200px;
+      background: radial-gradient(ellipse at center, rgba(79, 142, 247, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .fc-card:hover .fc-card-glow { opacity: 1; }
+
+    /* Icon */
+    .fc-icon {
+      font-size: 36px;
+      line-height: 1;
+      filter: drop-shadow(0 0 12px rgba(79, 142, 247, 0.35));
+    }
+
+    /* Title */
+    .fc-title {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: clamp(17px, 1.5vw, 20px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    /* Description */
+    .fc-desc {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Divider */
+    .fc-line {
+      height: 1px;
+      background: linear-gradient(90deg, #4F8EF7 0%, transparent 100%);
+      opacity: 0.25;
+      border-radius: 1px;
+    }
+
+    /* Tag */
+    .fc-tag {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4F8EF7;
+      opacity: 0.8;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .fc-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        gap: 20px;
+      }
+      .fc-card { padding: 30px 24px 26px; }
+    }
+
+    @media (min-width: 861px) and (max-width: 1060px) {
+      .fc-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .fc-card { padding: 28px 20px 24px; }
+    }
+  </style>
+
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── Constants ─────────────────────────────────────────────
+    const CANVAS        = 2500;
+    const PLANE_W       = 1750;   // bounding box of the assembled plane
+    const PLANE_H       = 1133;
+    const PLANE_CX      = 1359;   // plane center-of-mass in canvas coords
+    const PLANE_CY      = 1187;
+    const EXPLODE_MUL   = 3.8;    // amplify the manifest explode vectors
+    const EXPLODE_FADE  = 1;      // extra opacity offset so nothing is visible at start
+
+    // ── Scale stage to fit viewport ───────────────────────────
+    const stage     = document.getElementById('ps-stage')!;
+    const spotlight = document.getElementById('ps-spotlight')!;
+
+    function applyScale() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const isMobile = vw < 600;
+
+      const pad = isMobile ? 0.95 : 0.88;
+      const vPad = isMobile ? 0.72 : 0.78;
+
+      const scale = Math.min(
+        (vw * pad)  / PLANE_W,
+        (vh * vPad) / PLANE_H,
+      );
+
+      // Shift stage so the plane center aligns with viewport center
+      const ox = (CANVAS / 2 - PLANE_CX) * scale;
+      const oy = (CANVAS / 2 - PLANE_CY) * scale;
+
+      gsap.set(stage, {
+        scale,
+        x: ox,
+        y: oy,
+        transformOrigin: 'center center',
+        force3D: true,
+      });
+    }
+
+    applyScale();
+    window.addEventListener('resize', applyScale);
+
+    // ── Collect part elements ──────────────────────────────────
+    const partEls = Array.from(
+      document.querySelectorAll<HTMLImageElement>('.ps-part')
+    );
+
+    // Set every part to its exploded starting state
+    partEls.forEach((el) => {
+      const ex = parseFloat(el.dataset.ex ?? '0') * EXPLODE_MUL;
+      const ey = parseFloat(el.dataset.ey ?? '0') * EXPLODE_MUL;
+      gsap.set(el, { x: ex, y: ey, opacity: 0, scale: 0.92, force3D: true });
+    });
+
+    // Letter spans
+    const letters = document.querySelectorAll<HTMLElement>('.ps-text .lt');
+
+    // ── Build scroll timeline (total duration = 10 "units") ───
+    const tl = gsap.timeline({ defaults: { ease: 'none' } });
+
+    // Phase 1 — Pieces fly in and assemble  (t = 0 → 6)
+    partEls.forEach((el) => {
+      tl.to(
+        el,
+        {
+          x: 0, y: 0, opacity: 1, scale: 1,
+          ease: 'power3.out',
+          duration: 4.5,
+        },
+        // stagger each part: randomised start between t=0 and t=1.2
+        gsap.utils.random(0, 1.2),
+      );
+    });
+
+    // Spotlight fades in as plane assembles
+    tl.to(spotlight, { opacity: 1, ease: 'power2.out', duration: 1.5 }, 4.5);
+
+    // Phase 2 — Text letter-by-letter  (t = 6 → 7.8)
+    tl.to(
+      letters,
+      {
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+        stagger: { amount: 1.2, from: 'start' },
+        duration: 0.5,
+      },
+      6,
+    );
+
+    // Phase 3 — Plane floats up and fades  (t = 8.2 → 10)
+    tl.to(stage,    { y: '-=180', opacity: 0, ease: 'power1.in', duration: 1.8 }, 8.2);
+    tl.to('#ps-text',    { opacity: 0, ease: 'power1.in', duration: 0.9 }, 8.4);
+    tl.to(spotlight, { opacity: 0, ease: 'power1.in', duration: 0.9 }, 8.4);
+
+    // ── Attach ScrollTrigger ───────────────────────────────────
+    ScrollTrigger.create({
+      trigger: '.ps-scroll',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.5,
+      animation: tl,
+      onUpdate: (self) => updateDots(self.progress),
+    });
+
+    // ── Progress dots ──────────────────────────────────────────
+    const dots = document.querySelectorAll<HTMLElement>('.ps-dot');
+
+    function updateDots(p: number) {
+      dots.forEach((d, i) => {
+        const thresholds = [0, 0.55, 0.82];
+        const active = p >= thresholds[i] && (i === dots.length - 1 || p < thresholds[i + 1]);
+        d.classList.toggle('active', active);
+      });
+    }
+
+    updateDots(0);
+
+    // ── Feature cards — scroll-triggered entrance ──────────────
+    gsap.utils.toArray<HTMLElement>('.fc-card').forEach((card, i) => {
+      gsap.to(card, {
+        y: 0,
+        opacity: 1,
+        duration: 0.75,
+        ease: 'power2.out',
+        delay: i * 0.13,
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      });
+    });
+  </script>
+</body>
+</html>
